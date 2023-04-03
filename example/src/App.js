@@ -1,105 +1,67 @@
-import _set from 'lodash/set';
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import AngleRange from 'react-angle-range';
-import 'react-angle-range/dist/index.css';
+//import 'react-angle-range/dist/index.css';
+
+import {TextField, Grid, Button} from '@mui/material';
 
 import './App.css';
 
-const defaultAngleRange = {
-  example1: {
-    from: 0,
-    to: 180,
-  },
-  example2: {
-    from: 0,
-    to: 45,
-  },
-}
-
-const modulus360 = (angle) => (
-  (angle + 360) % 360
-)
-
 function App() {
-  const [ angleRange, setAngleRange ] = useState(defaultAngleRange)
+  const [ fullCircle, setFullCircle ] = useState(0)
+  const [ quartercircle, setQuarterCircle ] = useState(90)
+  const [ invertedQuarterCircle, setInvertedQuarterCircle ] = useState(0)
 
-  const onChange = useCallback((prop, value) => {
-    let updatedAngleRange = { ...angleRange }
-    _set(updatedAngleRange, prop, value)
-    setAngleRange(updatedAngleRange)
-  }, [ angleRange, setAngleRange ])
-  
-  const onChangeAngleRangeExample1 = useCallback(({ from, to }) => {
-    onChange('example1', { from, to })
-  }, [ onChange ])
+  const handleChangeFullCircle = (event) => {
+    setFullCircle(event)
+  }
 
-  const onChangeAngleRangeExample2 = useCallback(({ from, to }) => {
-    onChange('example2', { from, to })
-  }, [ onChange ])
+  const handleChangeFullCircleText = (event) => {
+    setFullCircle(Number(event.target.value))
+  }
+
+  const handleChangeQuarterCircle = (event) => {
+    setQuarterCircle(event)
+  }
+
+  const handleChangeQuarterCircleText = (event) => {
+    setQuarterCircle(Number(event.target.value))
+  }
+
+  useEffect(() => {
+    setInvertedQuarterCircle(90 - quartercircle)
+  }, [quartercircle])  
   
   return (
     <div className="App">
-      <header className="App-header">
-       Examples react-angle-range
-      </header>
-
-      <div className="AngleRange-card-components">
+      <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
         <div>
-        <h3>angleRange: </h3>
-        {JSON.stringify(angleRange)}
-      </div>
-        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-          <div>
-            <h3>Full range angleRange</h3>
-            <AngleRange
-              radius={150}
-              value={angleRange.example1}
-              onChange={onChangeAngleRangeExample1}
-              handlerRadius={10}
-              handlerRangeRadiusOffset={51}
-              min={1}
-              max={360}
-              minOffset={0}
-              maxOffset={180}
-            />
-            <div className='dashboard'>
-            <div>
-              <div>center angle: {(modulus360(angleRange.example1.to + angleRange.example1.from) / 2)}°</div> 
-              <div>offset angle: ±{modulus360((angleRange.example1.to - angleRange.example1.from) )/ 2}°</div>
-              <div>from: {angleRange.example1.from}°</div>
-              <div>to: {angleRange.example1.to}°</div> 
-            </div>
-          </div>
-          </div>
+          <h3>Full Circle</h3>
+          <AngleRange
+            radius={150}
+            value={fullCircle}
+            onChange={handleChangeFullCircle}
+            handlerRadius={10}
+            handlerRangeRadiusOffset={10}
+            min={1}
+            max={360}
+          />
+          <TextField type={'number'} value={fullCircle} onChange={handleChangeFullCircleText}></TextField>
+        </div>
 
-          <div>
-            <h3>quarter range angleRange</h3>
-            <AngleRange
-              radius={150}
-              value={angleRange.example2}
-              onChange={onChangeAngleRangeExample2}
-              handlerRadius={10}
-              handlerRangeRadiusOffset={51}
-              limitFrom={{ min: 0, max: 90 }}
-              limitTo={{ min: 0, max: 90 }}
-              min={0}
-              max={90}
-              minOffset={0}
-              maxOffset={45}
-              isQuarterCircle
-            />
-            <div className='dashboard'>
-            <div>
-              <div>center angle: {(modulus360(angleRange.example2.to + angleRange.example2.from) / 2)}°</div> 
-              <div>offset angle: ±{modulus360((angleRange.example2.to - angleRange.example2.from) )/ 2}°</div>
-              <div>from: {angleRange.example2.from}°</div>
-              <div>to: {angleRange.example2.to}°</div> 
-            </div>
-          </div>
-          </div>
-          
-         
+        <div>
+          <h3>Quarter Circle</h3>
+          <AngleRange
+            radius={300}
+            value={quartercircle}
+            onChange={handleChangeQuarterCircle}
+            handlerRadius={10}
+            handlerRangeRadiusOffset={10}
+            min={0}
+            max={90}
+            isQuarterCircle
+          />
+          <TextField type={'number'} value={invertedQuarterCircle} onChange={handleChangeQuarterCircleText}></TextField>
         </div>
       </div>
     </div>

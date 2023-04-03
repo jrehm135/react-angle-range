@@ -4,17 +4,21 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "lodash": "4.17.15",
-    "react": "link:../node_modules/react",
-    "react-angle-range": "link:..",
-    "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts"
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.15",
+    "lodash": "4.17.21",
+    "postcss-preset-env": "^8.3.0",
+    "react": "file:../node_modules/react",
+    "react-dom": "file:../node_modules/react-dom",
+    "react-angle-range": "file:..",
+    "react-scripts": "file:../node_modules/react-scripts"
   },
   "scripts": {
-    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
-    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
+    "start": "node ../node_modules/react-scripts/bin/react-scripts.js --openssl-legacy-provider start",
+    "build": "node ../node_modules/react-scripts/bin/react-scripts.js --openssl-legacy-provider build",
+    "test": "node ../node_modules/react-scripts/bin/react-scripts.js --openssl-legacy-provider test",
+    "eject": "node ../node_modules/react-scripts/bin/react-scripts.js --openssl-legacy-provider eject"
   },
   "eslintConfig": {
     "extends": "react-app"
